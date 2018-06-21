@@ -8,17 +8,17 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * Servlet implementation class Login
+ * Servlet implementation class LogoutServlet
  */
-
-@WebServlet(urlPatterns = "/loginpage")
-public class Login extends HttpServlet {
+@WebServlet(urlPatterns = "/logout")
+public class LogoutServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-
+       
     /**
-     * Default constructor. 
+     * @see HttpServlet#HttpServlet()
      */
-    public Login() {
+    public LogoutServlet() {
+        super();
         // TODO Auto-generated constructor stub
     }
 
@@ -27,23 +27,16 @@ public class Login extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		//response.getWriter().append("Served at: ").append(request.getContextPath());
-		request.getRequestDispatcher("WEB-INF/views/loginform.jsp").forward(request, response);
+		//System.out.println("logout get");
+		request.getRequestDispatcher("/login").forward(request, response);
 	}
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		 
-		String email = request.getParameter("email"), password = request.getParameter("password");
-		request.setAttribute("email", email); 
-		//request.setAttribute("password", password);
-		if(email.equals("afkghouri@gmail.com") && password.equals("1"))
-			request.getRequestDispatcher("WEB-INF/views/success.jsp").forward(request, response);
-		else
-			request.getRequestDispatcher("WEB-INF/views/failure.jsp").forward(request, response);
+		// TODO Auto-generated method stub 
+		//System.out.println("logout post");
 	}
 
 }

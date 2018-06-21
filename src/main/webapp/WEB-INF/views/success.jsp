@@ -10,6 +10,9 @@
  
  
 <h1>logged in successfully ${email} !</h1>
-
+<form method="get" action="/logout">
+	<input type="submit" value="logout"/>
+	<input type="hidden" name="hidden_email" value="${email}"/>
+</form>
 </body>
 </html>

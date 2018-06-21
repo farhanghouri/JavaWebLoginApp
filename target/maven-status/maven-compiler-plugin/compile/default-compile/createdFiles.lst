@@ -1,2 +1,8 @@
-com/afkghouri/Login.class
+com/afkghouri/MyConnection.class
+com/afkghouri/DBConnection.class
+com/afkghouri/Configuration.class
+com/afkghouri/ConnectionPool.class
 com/afkghouri/DemoServlet.class
+com/afkghouri/LoginServlet.class
+com/afkghouri/LogoutServlet.class
+com/afkghouri/MyException.class
