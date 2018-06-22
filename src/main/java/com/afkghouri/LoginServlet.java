@@ -23,13 +23,13 @@ import javax.servlet.http.HttpServletResponse;
 public class LoginServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	HashMap<String, Connection> login_connections = new HashMap<>(); 
-	int count=0;
+	
+	ThreadLocal<Integer> count = new ThreadLocal<>();
 
 	/**
 	 * Default constructor. 
 	 */
 	public LoginServlet() {
-		// TODO Auto-generated constructor stub
 	}
 
 	/**
@@ -37,9 +37,13 @@ public class LoginServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-
-		String hidden_email = request.getParameter("hidden_email");
-
+		if(count.get() == null)
+			count.set(0);
+		count.set(count.get()+1);
+		System.out.println("thread local count: "+count.get());
+		
+		String hidden_email = request.getParameter("hidden_email"); 
+		
 		if(hidden_email != null)
 			try {
 				Connection conn = login_connections.remove(hidden_email); 
@@ -51,7 +55,7 @@ public class LoginServlet extends HttpServlet {
 				e.printStackTrace();
 			}
 
-		request.getRequestDispatcher("WEB-INF/views/loginform.jsp").forward(request, response);
+		request.getRequestDispatcher("views/loginform.jsp").forward(request, response);
 	}
 
 	/**
@@ -71,10 +75,10 @@ public class LoginServlet extends HttpServlet {
 
 		switch(value){
 		case 1:
-			goToJSP(request, response, "WEB-INF/views/success.jsp");
+			goToJSP(request, response, "views/success.jsp");
 			break;
 		case 0:
-			goToJSP(request, response, "WEB-INF/views/failure.jsp");
+			goToJSP(request, response, "views/failure.jsp");
 			break;
 		case 500:
 			response.getWriter().println("connection pool overflowed...");
@@ -106,7 +110,8 @@ public class LoginServlet extends HttpServlet {
 			if(rs.next()){
 				login_connections.put(email, con); // connection preserved
 				return 1; 
-			}
+			}else
+				con.close(); // connection released if login failed
 		} catch (ClassNotFoundException | SQLException e) {
 			e.printStackTrace();
 		} catch(NullPointerException ex){ 
