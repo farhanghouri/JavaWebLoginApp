@@ -77,7 +77,7 @@ public class LoginServlet extends HttpServlet {
 			goToJSP(request, response, "WEB-INF/views/failure.jsp");
 			break;
 		case 500:
-			response.getWriter().println("connection overflow");
+			response.getWriter().println("connection pool overflowed...");
 			break;
 		}
 
